@@ -1,36 +1,48 @@
 const path = require('path');
-const webpack = require('webpack')
+const ESLintPlugin = require('eslint-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const dotenv = require("dotenv");
 
 module.exports = {
-    mode: 'none',
-    entry: {
-        app: path.join(__dirname, 'src', 'index.tsx')
-    },
     target: 'web',
-    resolve: {
-        extensions: ['.ts', '.tsx', '.js']
+    entry: { main: './src/index.js' },
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'main.js',
+        publicPath: '/',
     },
     module: {
         rules: [
             {
-                test: /\.tsx?$/,
-                use: 'ts-loader',
-                exclude: '/node_modules/'
+                test: [/\.js$/, /\.jsx$/],
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                },
+            },
+            {
+                test: /\.less$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: ['css-loader', 'less-loader'],
+                }),
             }
         ],
     },
-    output: {
-        filename: '[name].js',
-        path: path.resolve(__dirname, 'dist')
+    devServer: {
+        historyApiFallback: true,
     },
     plugins: [
-        new HtmlWebpackPlugin({
-            template: path.join(__dirname, 'src', 'index.html')
+        new ESLintPlugin({
+           extensions: ['js', 'jsx'],
+           exclude: 'node_modules',
         }),
-        new webpack.DefinePlugin({
-            'process.env': JSON.stringify(dotenv.config().parsed)
-        })
-    ]
-}
+        new ExtractTextPlugin({ filename: 'style.css' }),
+        new HtmlWebpackPlugin({
+            inject: false,
+            hash: true,
+            template: './src/index.html',
+            filename: 'index.html',
+        }),
+    ],
+};
