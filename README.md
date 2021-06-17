@@ -1,2 +1,8 @@
-# react_ts_webpack
-React + Typescript + Webpack
+# react_redux_webpack
+React + Redux + Webpack
+
+# Run project 
+
+<npm install>
+
+<npm start>
