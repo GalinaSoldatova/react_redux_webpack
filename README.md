@@ -3,6 +3,6 @@ React + Redux + Webpack
 
 # Run project 
 
-<npm install>
+npm install
 
-<npm start>
+npm start
