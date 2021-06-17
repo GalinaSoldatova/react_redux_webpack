@@ -1,69 +1,54 @@
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
-class Login extends React.Component {
-  static propTypes = {
-    isAuthorized: PropTypes.bool,
-    logIn: PropTypes.func.isRequired,
-    error: PropTypes.string
-  };
+function Login(props) {
+  const [state, setState] = useState(props);
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      username: '',
-      password: ''
-    };
+  if (props.isAuthorized) {
+    return <Redirect to='/profile'/>;
   }
 
-  render() {
-    const { isAuthorized } = this.props;
+  const { username, password } = state;
+  const { error } = props;
 
-    if (isAuthorized) {
-      return <Redirect to='/profile' />;
-    }
-
-    const { username, password } = this.state;
-    const { error } = this.props;
-
-    return (
-      <div id='login' className='wrapper'>
-        <form id='login-form' onSubmit={this.handleSubmit}>
-          <label>Имя пользователя</label>
-          <input required type='text' name='username' value={username} onChange={this.onChangeUsername} />
-          <label>Пароль</label>
-          <input required type='password' name='password' value={password} onChange={this.onChangePassword} />
-          <button type="submit">Войти</button>
-          <div className='error-message' hidden={!error}>
-            {error}
-          </div>
-        </form>
-      </div>
-    );
-  }
-
-  onChangeUsername = (event) => {
+  function changeUsername(event) {
     const { target: { value } } = event;
-
-    this.setState({ username: value });
+    setState({ username: value });
   }
 
-  onChangePassword = (event) => {
+  function changePassword(event) {
     const { target: { value } } = event;
-
-    this.setState({ password: value });
+    setState({ password: value });
   }
 
-  handleSubmit = (event) => {
+  function handleSubmit(event) {
     event.preventDefault();
-    const { username, password } = this.state;
-
-    this.props.logIn(username, password);
+    props.logIn(username, password);
   }
+
+  return (
+    <div id='login' className='wrapper'>
+      <form id='login-form' onSubmit={ handleSubmit }>
+        <label>Имя пользователя</label>
+        <input required type='text' name='username' value={ username } onChange={ changeUsername }/>
+        <label>Пароль</label>
+        <input required type='password' name='password' value={ password } onChange={ changePassword }/>
+        <button type="submit">Войти</button>
+        <div className='error-message' hidden={ !error }>
+          { error }
+        </div>
+      </form>
+    </div>
+  );
 }
+
+Login.propTypes = {
+  isAuthorized: PropTypes.bool,
+  logIn: PropTypes.func.isRequired,
+  error: PropTypes.string
+};
 
 const mapStateToProps = (state) => (
   {
@@ -74,7 +59,10 @@ const mapStateToProps = (state) => (
 
 const mapDispatchToProps = (dispatch) => (
   {
-    logIn: (username, password) => dispatch({ type: 'LOG_IN', payload: { username, password } }),
+    logIn: (username, password) => dispatch({
+      type: 'LOG_IN',
+      payload: { username, password }
+    }),
   }
 );
 

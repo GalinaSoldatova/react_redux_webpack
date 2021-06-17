@@ -4,19 +4,16 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
 const Authorization = (WrappedComponent) => {
-  class WithAuthorization extends React.Component {
-    static propTypes = {
-      isAuthorized: PropTypes.bool
-    };
-
-    render() {
-      const { isAuthorized } = this.props;
-      if (!isAuthorized) {
-        return <Redirect to='/login' />;
-      }
-      return <WrappedComponent {...this.props}/>;
+  function WithAuthorization(props) {
+    if (!props.isAuthorized) {
+      return <Redirect to='/login'/>;
     }
+    return <WrappedComponent {...props}/>;
   }
+
+  WithAuthorization.propTypes = {
+    isAuthorized: PropTypes.bool
+  };
 
   const mapStateToProps = (state) => ({
     isAuthorized: Boolean(state.username)
