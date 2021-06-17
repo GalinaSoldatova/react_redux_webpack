@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import Article from '../components/article';
 
-function News(props) {
-  const [state, setState] = useState(props);
+function News() {
+  const [state, setState] = useState(undefined);
 
-  const url = 'https://newsapi.org/v2/top-headlines?country=ru&apiKey=dd22d108371249aab6de86b570fbf8e1';
-  fetch(url)
-    .then(res => res.json())
-    .then(el => setState({ articles: el.articles }));
+  React.useEffect(() => {
+    const url = 'https://newsapi.org/v2/top-headlines?country=ru&apiKey=dd22d108371249aab6de86b570fbf8e1';
+    fetch(url)
+      .then(res => res.json())
+      .then(el => setState([...el.articles]));
+  }, []);
 
   return (
     <div className='wrapper'>
@@ -15,7 +17,7 @@ function News(props) {
         <h1>Лента новостей</h1>
       </div>
       <div className='news list'>
-        {state.articles.map(
+        {state && state.map(
           (article, index) => <Article
             key={index}
             title={article.title}

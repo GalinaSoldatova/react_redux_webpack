@@ -4,23 +4,23 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
 function Login(props) {
-  const [state, setState] = useState(props);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   if (props.isAuthorized) {
     return <Redirect to='/profile'/>;
   }
 
-  const { username, password } = state;
   const { error } = props;
 
   function changeUsername(event) {
     const { target: { value } } = event;
-    setState({ username: value });
+    setUsername(value);
   }
 
   function changePassword(event) {
     const { target: { value } } = event;
-    setState({ password: value });
+    setPassword(value);
   }
 
   function handleSubmit(event) {

@@ -6,7 +6,7 @@ import { SIGN_OUT } from '../store/actionTypes';
 function Profile(props) {
   function signOut() {
     props.signOut();
-  };
+  }
 
   return (
     <div className='wrapper profile'>
