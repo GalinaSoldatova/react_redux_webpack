@@ -23,20 +23,20 @@ class Login extends React.Component {
     const { isAuthorized } = this.props;
 
     if (isAuthorized) {
-      return <Redirect to='/' />;
+      return <Redirect to='/profile' />;
     }
 
     const { username, password } = this.state;
     const { error } = this.props;
 
     return (
-      <div id='login'>
+      <div id='login' className='wrapper'>
         <form id='login-form' onSubmit={this.handleSubmit}>
-          <label>Login</label>
+          <label>Имя пользователя</label>
           <input required type='text' name='username' value={username} onChange={this.onChangeUsername} />
-          <label>Password</label>
+          <label>Пароль</label>
           <input required type='password' name='password' value={password} onChange={this.onChangePassword} />
-          <button type="submit">Sign In</button>
+          <button type="submit">Войти</button>
           <div className='error-message' hidden={!error}>
             {error}
           </div>

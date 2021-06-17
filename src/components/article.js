@@ -8,12 +8,8 @@ const Article = (props) => {
 
   return (
     <article>
-      { urlToImage &&
-        <div className='img-wrap'>
-          <img align='left' src={urlToImage}/>
-        </div>
-      }
-      <div>
+      { (urlToImage) ? <div className='img-wrap' style={{ backgroundImage: `url(${urlToImage})` }}> </div> : '' }
+      <div className='content'>
         <div className='title'>
           <a href={url}>{title}</a>
           <div className='author'>
@@ -21,6 +17,7 @@ const Article = (props) => {
           </div>
         </div>
         <p>{description}</p>
+
       </div>
     </article>
   );

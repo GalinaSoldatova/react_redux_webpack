@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { SIGN_OUT } from '../store/actionTypes';
 
-
 class Profile extends React.Component {
   static propTypes = {
     signOut: PropTypes.func.isRequired,
@@ -12,16 +11,16 @@ class Profile extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className='header profile'>
-          <h2>Profile</h2>
+      <div className='wrapper profile'>
+        <div className='header'>
+          <h1>Профиль</h1>
         </div>
         <div className='profile-info'>
           <div className='group'>
-            <label>Username:</label>
+            <label>Имя пользователя:</label>
             <span>{this.props.username}</span>
           </div>
-          <button onClick={this.signOut}>Sign out</button>
+          <button onClick={this.signOut}>Выйти</button>
         </div>
       </div>
     );

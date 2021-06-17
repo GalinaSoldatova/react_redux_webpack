@@ -11,7 +11,7 @@ class News extends React.Component {
   }
 
   componentDidMount() {
-    const url = 'https://newsapi.org/v2/top-headlines?sources=hacker-news&apiKey=f22bcc2fb9a54185b76491b9c353d894';
+    const url = 'https://newsapi.org/v2/top-headlines?country=ru&apiKey=dd22d108371249aab6de86b570fbf8e1';
     fetch(url)
       .then(res => res.json())
       .then(el => this.setState({ articles: el.articles }));
@@ -19,19 +19,22 @@ class News extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='wrapper'>
         <div className='news header'>
-          <h1>News</h1>
+          <h1>Лента новостей</h1>
         </div>
-        { this.state.articles.map((article, index) =>
-          <Article key={index}
-            title={article.title}
-            description={article.description}
-            url={article.url}
-            author={article.author}
-            urlToImage={article.urlToImage}
-          />
-        )}
+        <div className='news list'>
+          { this.state.articles.map(
+            (article, index) => <Article
+              key={index}
+              title={article.title}
+              description={article.description}
+              url={article.url}
+              author={article.author}
+              urlToImage={article.urlToImage}
+            />
+          )}
+        </div>
       </div>
     );
   }

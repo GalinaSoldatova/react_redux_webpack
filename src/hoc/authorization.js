@@ -11,20 +11,16 @@ const Authorization = (WrappedComponent) => {
 
     render() {
       const { isAuthorized } = this.props;
-
       if (!isAuthorized) {
         return <Redirect to='/login' />;
       }
-
       return <WrappedComponent {...this.props}/>;
     }
   }
 
-  const mapStateToProps = (state) => (
-    {
-      isAuthorized: Boolean(state.username)
-    }
-  );
+  const mapStateToProps = (state) => ({
+    isAuthorized: Boolean(state.username)
+  });
 
   return connect(mapStateToProps)(WithAuthorization);
 };
