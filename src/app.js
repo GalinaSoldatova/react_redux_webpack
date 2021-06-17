@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { routes } from './routes';
 import NavigationBar from './components/navigationBar';
 import Authorization from './hoc/authorization';
-import Footer from "./components/footer";
+import Footer from './components/footer';
 
 const App = () => {
   const renderSwitch = () => (

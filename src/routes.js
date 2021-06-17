@@ -3,7 +3,7 @@ import Profile from './pages/profile';
 import Login from './pages/login';
 import Home from './pages/home';
 
-//List of routes
+// List of routes
 export const routes = [
   {
     isNavBar: true,

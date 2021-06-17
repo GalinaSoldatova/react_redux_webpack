@@ -17,7 +17,7 @@ const store = createStoreWithMiddleware(reducers, initialState,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-//save to localStorage
+// Save to localStorage
 store.subscribe(() => {
   saveState({
     username: store.getState().username
